@@ -711,19 +711,21 @@ if nix:
                          "-Wsign-compare",
                          "-Wno-unknown-pragmas",
                          "-Winvalid-pch"] )
+    # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
+    if linux:
+        env.Append( CCFLAGS=["-pipe"] )
+        if not has_option("disable-warnings-as-errors"):
+            #env.Append( CCFLAGS=["-Werror"] )
+            pass
+        if not has_option('clang'):
+            env.Append( CCFLAGS=["-fno-builtin-memcmp"] ) # glibc's memcmp is faster than gcc's
+
     # 2023-03-10 melker: There's a lot of std::auto_ptr in the codebase, which was deprecated in C++11, emitting -Wdeprecated-declarations
     # There are also some other funny things that spam us much too much.
     env.Append( CCFLAGS=["-Wno-error",
                          "-Wno-deprecated-declarations",
                          "-Wno-misleading-indentation",
                          "-Wno-unused-local-typedefs" ] )
-    # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
-    if linux:
-        env.Append( CCFLAGS=["-pipe"] )
-        if not has_option("disable-warnings-as-errors"):
-            env.Append( CCFLAGS=["-Werror"] )
-        if not has_option('clang'):
-            env.Append( CCFLAGS=["-fno-builtin-memcmp"] ) # glibc's memcmp is faster than gcc's
 
     env.Append( CPPDEFINES=["_FILE_OFFSET_BITS=64"] )
     env.Append( CXXFLAGS=["-Wnon-virtual-dtor", "-Woverloaded-virtual"] )

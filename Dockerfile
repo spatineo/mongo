@@ -12,6 +12,6 @@ RUN apt update && \
 
 COPY . .
 
-RUN scons --disable-warnings-as-errors -j4 all && scons --prefix=/usr/local/ install
+RUN scons --disable-warnings-as-errors --release --static -j4 all && scons --prefix=/usr/local/ install
 
 CMD [ "/bin/bash" ]
