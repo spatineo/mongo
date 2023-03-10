@@ -54,7 +54,8 @@ namespace mongo {
             // Caps the number of files that may be allocated in a database, allowing about 32TB of
             // data per db.  Note that the DiskLoc and DiskLoc56Bit types supports more files than
             // this value, as does the data storage format.
-            MaxFiles=16000
+            // 2022-03-10 melker: that's about 2GB per file, meaning that with 18000 files we'd be at ~36TB
+            MaxFiles=18000
         };
 
         DiskLoc(int a, int Ofs) : _a(a), ofs(Ofs) { }
