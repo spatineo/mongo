@@ -12,9 +12,6 @@ RUN apt update && \
 
 COPY . .
 
-# Some useful -Wno* flags included
-# There's a lot of std::auto_ptr in the codebase, which was deprecated in C++11, emitting -Wdeprecated-declarations
-# There are a lot of unused local typedefs which probably never emitted warnings with older versions of GCC
-RUN CCFLAGS="-Wnodeprecated-declarations -Wnounused-local-typedefs" scons --disable-warnings-as-errors -j4 all && scons --prefix=/usr/local/ install
+RUN scons --disable-warnings-as-errors -j4 all && scons --prefix=/usr/local/ install
 
 CMD [ "/bin/bash" ]
