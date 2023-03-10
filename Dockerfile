@@ -7,8 +7,7 @@ WORKDIR /opt/mongo-build/
 
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y scons build-essential && \
-    apt install -y libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev
+    apt install -y scons build-essential gcc-4.8 g++-4.8
 
 COPY . .
 
@@ -16,6 +15,7 @@ COPY . .
 # when compiled with GCC 7 (incl. in bionic): its heap allocator is busted.
 # After some initial head scratching it seems like the spidermonkey backend
 # works just fine. Therefore `--usesm`.
-RUN scons --disable-warnings-as-errors --usesm -j4 all && scons --prefix=/usr/local/ install
+RUN scons --cc=gcc-4.8 --cxx=g++-4.8 --disable-warnings-as-errors -j4 all && \
+    scons --cc=gcc-4.8 --cxx=g++-4.8 --prefix=/usr/local/ install
 
 CMD [ "/bin/bash" ]

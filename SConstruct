@@ -726,8 +726,8 @@ if nix:
                          "-Wno-deprecated-declarations",
                          "-Wno-misleading-indentation",
                          "-Wno-unused-local-typedefs" ] )
-    # 2023-03-10 melker: Explicitly set -std=c++11
-    env.Append( CXXFLAGS="-std=c++11" )
+    # 2023-03-10 melker: Explicitly set -std=c++11. Seems to break GCC 4.8
+    #env.Append( CXXFLAGS="-std=c++11" )
 
     env.Append( CPPDEFINES=["_FILE_OFFSET_BITS=64"] )
     env.Append( CXXFLAGS=["-Wnon-virtual-dtor", "-Woverloaded-virtual"] )
