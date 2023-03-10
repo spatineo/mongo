@@ -713,8 +713,10 @@ if nix:
                          "-Winvalid-pch"] )
     # 2023-03-10 melker: There's a lot of std::auto_ptr in the codebase, which was deprecated in C++11, emitting -Wdeprecated-declarations
     # There are also some other funny things that spam us much too much.
-    env.Append( CCFLAGS=["-Wnodeprecated-declarations",
-                         "-Wnounused-local-typedefs" ] )
+    env.Append( CCFLAGS=["-Wno-error",
+                         "-Wno-deprecated-declarations",
+                         "-Wno-misleading-indentation",
+                         "-Wno-unused-local-typedefs" ] )
     # env.Append( " -Wconversion" ) TODO: this doesn't really work yet
     if linux:
         env.Append( CCFLAGS=["-pipe"] )
