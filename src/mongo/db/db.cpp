@@ -65,6 +65,14 @@
 # include <sys/file.h>
 #endif
 
+/* 2023-03-10 melker: Potentially _required_ at some point by newer versions
+ *                    of glibc. The macros major() and minor() are pulled from
+ *                    here and used to reside in <sys/types.h>
+ */
+#ifdef __linux__
+#include <sys/sysmacros.h>
+#endif
+
 namespace mongo {
 
     namespace dur {
