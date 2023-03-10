@@ -7,7 +7,9 @@
 #include "mongo/platform/unordered_set.h"
 #define hash_set mongo::unordered_set
 
-#if 0
+/* I have no idea how low this should go, but 7 at the very least no longer has
+ * std::tr1 and instead uses just plain old std */
+#if defined(__GNUC__) && __GNUC__ < 7
 #if defined OS_LINUX || defined OS_MACOSX || defined __sunos__ || defined __freebsd__
 #define HASH_NAMESPACE_START namespace std { namespace tr1 {
 #define HASH_NAMESPACE_END }}
