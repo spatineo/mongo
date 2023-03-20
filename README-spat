@@ -1,0 +1,6 @@
+This is a slightly patched version of MongoDB 2.4.14. The only real difference
+at the moment would be a slightly raised maximum file limit for the storage
+engine from 16,000 files to 18,000 files. This raises the maximum database size
+from around 32TB to roughly 36TB.
+
+To build your own, you can run `./build-docker.sh`.

@@ -2,6 +2,7 @@
 
 # .gitignore
 /build
+/build-docker
 /src/mongo/db/modules
 /.jsdbshell
 /.dbshell
