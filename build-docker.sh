@@ -21,9 +21,14 @@ mkdir -p ./build-docker
 
 # Copy the tarballs while converting from .gz to .xz
 # Also build the tarballs first if they don't exist
-docker run -v "$(pwd)"/build-docker:/opt/mongo-dist:z --rm "${TAG}" sh -c '
+docker run -v "$(pwd)"/build-docker:/opt/mongo-dist:z -it --rm "${TAG}" sh -c '
 	ls mongodb-*.tgz >/dev/null 2>/dev/null || scons --cc=gcc-4.8 --cxx=g++-4.8 --prefix=/usr/local/ --distmod=spat-1-gcc4.8-v8 dist
 	for f in *.tgz; do
-		gunzip -c "$f" | xz -z9 > /opt/mongo-dist/"$(basename "${f}" .tgz)".tar.xz
+		final_fname=/opt/mongo-dist/"$(basename "${f}" .tgz)".tar.xz
+		if [ -f "${final_fname}" ]; then
+			# try not to clobber
+			mv "${final_fname}" "$(dirname "${final_fname}")/$(stat -c %Y "${final_fname}")-$(basename "${final_fname}")"
+		fi
+		gunzip -c "$f" | xz -z9 > "${final_fname}"
 	done
 '
